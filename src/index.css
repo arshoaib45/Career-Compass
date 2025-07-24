@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+
+a4-paper {
+  display: block;
+  background: white;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  margin: 2rem auto;
+  width: 794px;
+  min-height: 1122px;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 2rem;
+  break-after: page;
+  page-break-after: always;
+}
+
+@media print {
+  .a4-paper {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+}
