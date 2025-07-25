@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Header = () => {
+const Header = ({ onCreateResume }) => {
   return (
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#472426] px-10 py-3">
+    <header className="flex flex-col sm:flex-row items-center justify-between whitespace-nowrap border-b border-solid border-b-[#472426] px-4 sm:px-10 py-3">
       <div className="flex items-center gap-4 text-white">
         <div className="size-4">
           <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,12 +14,9 @@ const Header = () => {
         </div>
         <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">CareerCompass</h2>
       </div>
-      <div className="flex flex-1 justify-end gap-8">
-        <nav className="flex items-center gap-9">
-          <a className="text-white text-sm font-medium" href="#">Templates</a>
-        </nav>
+      <div className="flex flex-1 justify-end gap-8 mt-3 sm:mt-0">
         <div className="flex gap-2">
-          <button className="h-10 px-4 rounded-xl bg-[#ea2832] text-white text-sm font-bold">Create my resume</button>
+          <button className="h-10 px-4 rounded-xl bg-[#ea2832] text-white text-sm font-bold" onClick={onCreateResume}>Create my resume</button>
         </div>
       </div>
     </header>

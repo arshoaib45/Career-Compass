@@ -8,6 +8,41 @@ const ResumeForm = ({ formData, setFormData, onPreview }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Address and links
+  const handleAddressChange = (e) => {
+    setFormData({ ...formData, address: e.target.value });
+  };
+  const handleLinkChange = (idx, e) => {
+    const updated = formData.links.map((l, i) => i === idx ? { ...l, [e.target.name]: e.target.value } : l);
+    setFormData({ ...formData, links: updated });
+  };
+  const addLink = () => setFormData({ ...formData, links: [...formData.links, { label: '', url: '' }] });
+  const removeLink = (idx) => setFormData({ ...formData, links: formData.links.filter((_, i) => i !== idx) });
+
+  // Awards
+  const handleAwardChange = (idx, e) => {
+    const updated = formData.awards.map((a, i) => i === idx ? e.target.value : a);
+    setFormData({ ...formData, awards: updated });
+  };
+  const addAward = () => setFormData({ ...formData, awards: [...formData.awards, ''] });
+  const removeAward = (idx) => setFormData({ ...formData, awards: formData.awards.filter((_, i) => i !== idx) });
+
+  // Languages
+  const handleLanguageChange = (idx, e) => {
+    const updated = formData.languages.map((l, i) => i === idx ? e.target.value : l);
+    setFormData({ ...formData, languages: updated });
+  };
+  const addLanguage = () => setFormData({ ...formData, languages: [...formData.languages, ''] });
+  const removeLanguage = (idx) => setFormData({ ...formData, languages: formData.languages.filter((_, i) => i !== idx) });
+
+  // References
+  const handleReferenceChange = (idx, e) => {
+    const updated = formData.references.map((r, i) => i === idx ? e.target.value : r);
+    setFormData({ ...formData, references: updated });
+  };
+  const addReference = () => setFormData({ ...formData, references: [...formData.references, ''] });
+  const removeReference = (idx) => setFormData({ ...formData, references: formData.references.filter((_, i) => i !== idx) });
+
   // Education handlers
   const handleEducationChange = (idx, e) => {
     const updated = formData.education.map((ed, i) =>
@@ -98,6 +133,18 @@ const ResumeForm = ({ formData, setFormData, onPreview }) => {
           <input name="fullName" value={formData.fullName} onChange={handleInfoChange} placeholder="Full Name" className="block w-full mb-2 p-2 border rounded" />
           <input name="email" value={formData.email} onChange={handleInfoChange} placeholder="Email" className="block w-full mb-2 p-2 border rounded" />
           <input name="phone" value={formData.phone} onChange={handleInfoChange} placeholder="Phone" className="block w-full mb-2 p-2 border rounded" />
+          <input name="address" value={formData.address || ''} onChange={handleAddressChange} placeholder="Address" className="block w-full mb-2 p-2 border rounded" />
+          <div className="mb-2">
+            <label className="block font-semibold mb-1">Links</label>
+            {formData.links?.map((link, idx) => (
+              <div key={idx} className="flex gap-2 mb-1">
+                <input name="label" value={link.label} onChange={e => handleLinkChange(idx, e)} placeholder="Label" className="block w-1/3 p-2 border rounded" />
+                <input name="url" value={link.url} onChange={e => handleLinkChange(idx, e)} placeholder="URL" className="block w-2/3 p-2 border rounded" />
+                <button type="button" onClick={() => removeLink(idx)} className="px-2 py-1 bg-red-200 rounded">Remove</button>
+              </div>
+            ))}
+            <button type="button" onClick={addLink} className="mt-1 px-3 py-1 bg-blue-200 rounded">Add Link</button>
+          </div>
         </div>
       )}
       {/* Education Section */}
@@ -202,6 +249,48 @@ const ResumeForm = ({ formData, setFormData, onPreview }) => {
           )}
         </>
       )}
+      {/* Awards Section */}
+      {sectionHeader('Awards', 'awards')}
+      {openSection === 'awards' && (
+        <div className="mb-4">
+          {formData.awards?.map((award, idx) => (
+            <div key={idx} className="flex mb-1">
+              <input value={award} onChange={e => handleAwardChange(idx, e)} placeholder="Award" className="block w-full p-2 border rounded" />
+              <button type="button" onClick={() => removeAward(idx)} className="ml-2 px-2 py-1 bg-red-200 rounded">Remove</button>
+            </div>
+          ))}
+          <button type="button" onClick={addAward} className="mt-1 px-3 py-1 bg-blue-200 rounded">Add Award</button>
+        </div>
+      )}
+
+      {/* Languages Section */}
+      {sectionHeader('Languages', 'languages')}
+      {openSection === 'languages' && (
+        <div className="mb-4">
+          {formData.languages?.map((lang, idx) => (
+            <div key={idx} className="flex mb-1">
+              <input value={lang} onChange={e => handleLanguageChange(idx, e)} placeholder="Language" className="block w-full p-2 border rounded" />
+              <button type="button" onClick={() => removeLanguage(idx)} className="ml-2 px-2 py-1 bg-red-200 rounded">Remove</button>
+            </div>
+          ))}
+          <button type="button" onClick={addLanguage} className="mt-1 px-3 py-1 bg-blue-200 rounded">Add Language</button>
+        </div>
+      )}
+
+      {/* References Section */}
+      {sectionHeader('References', 'references')}
+      {openSection === 'references' && (
+        <div className="mb-4">
+          {formData.references?.map((ref, idx) => (
+            <div key={idx} className="flex mb-1">
+              <input value={ref} onChange={e => handleReferenceChange(idx, e)} placeholder="Reference" className="block w-full p-2 border rounded" />
+              <button type="button" onClick={() => removeReference(idx)} className="ml-2 px-2 py-1 bg-red-200 rounded">Remove</button>
+            </div>
+          ))}
+          <button type="button" onClick={addReference} className="mt-1 px-3 py-1 bg-blue-200 rounded">Add Reference</button>
+        </div>
+      )}
+
       {/* Preview Button */}
       <div className="flex justify-end pt-4">
         <button
